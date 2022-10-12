@@ -257,8 +257,8 @@ export class GLoader3D extends GObject {
         this.updateLayout();
     }
 
-    public freeSpine(){
-        if(this._content){
+    public freeSpine() {
+        if (this._content) {
             this._content.destroy();
         }
     }
@@ -286,20 +286,20 @@ export class GLoader3D extends GObject {
         this.updateLayout();
     }
 
-    public freeDragonBones():void{
-        if(this._content){
+    public freeDragonBones(): void {
+        if (this._content) {
             this._content.destroy();
         }
     }
 
     private onChange(): void {
-        if(this._contentItem == null)
+        if (this._contentItem == null)
             return;
-            
-        if(this._contentItem.type == PackageItemType.Spine){
+
+        if (this._contentItem.type == PackageItemType.Spine) {
             this.onChangeSpine();
         }
-        if(this._contentItem.type == PackageItemType.DragonBones){
+        if (this._contentItem.type == PackageItemType.DragonBones) {
             this.onChangeDragonBones();
         }
     }
@@ -325,9 +325,9 @@ export class GLoader3D extends GObject {
         else
             this._content.clearTrack(0);
 
-        let skin = this._skinName || this._content.skeletonData.getRuntimeData().skins[0].name;
+        let skin = this._content.skeletonData.getRuntimeData().skins[0];
         if (this._content["_skeleton"].skin != skin)
-            this._content.setSkin(skin);
+            this._content.setSkin(skin.name);
     }
 
     private onChangeDragonBones(): void {

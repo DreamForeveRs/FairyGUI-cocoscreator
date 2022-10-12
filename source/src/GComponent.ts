@@ -626,6 +626,22 @@ export class GComponent extends GObject {
                 else
                     this._container.parent = maskNode;
                 this._customMask = maskNode.addComponent(Mask);
+                if (value instanceof GImage) {
+                    this._customMask.type = Mask.Type.SPRITE_STENCIL;
+                } else if (value instanceof GGraph) {
+                    switch (value.type) {
+                        case 1:
+                            this._customMask.type = Mask.Type.GRAPHICS_RECT;
+                            break;
+                        case 2:
+                            this._customMask.type = Mask.Type.GRAPHICS_ELLIPSE;
+                            break;
+                        default:
+                            this._customMask.type = Mask.Type.GRAPHICS_STENCIL;
+                            break;
+                    }
+                }
+
             }
 
             value.visible = false;
@@ -664,15 +680,15 @@ export class GComponent extends GObject {
         this.off(FUIEvent.DISPLAY, this.onMaskReady, this);
 
         if (this._maskContent instanceof GImage) {
-            this._customMask.type = Mask.Type.IMAGE_STENCIL;
+            this._customMask.type = Mask.Type.SPRITE_STENCIL;
             this._customMask.alphaThreshold = 0.0001;
             this._customMask.spriteFrame = this._maskContent._content.spriteFrame;
         }
         else if (this._maskContent instanceof GGraph) {
             if (this._maskContent.type == 2)
-                this._customMask.type = Mask.Type.ELLIPSE;
+                this._customMask.type = Mask.Type.GRAPHICS_ELLIPSE;
             else
-                this._customMask.type = Mask.Type.RECT;
+                this._customMask.type = Mask.Type.GRAPHICS_RECT;
         }
     }
 
